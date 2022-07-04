@@ -1,181 +1,136 @@
-# TSDX React w/ Storybook User Guide
+# table-for-react 
+<div align="center">
+This is a basic react html table  table with added functionality fro doing database operations directly in the table[**table-for-react**](https://github.com/tigawanna/table-for-react) data <br>
+It provides basic displaying ,sorting and editing of json as table rows.<br>
+</div>
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+## About
+Created this table due to the lack of a simple-data table with simple controls for inline editing 
 
-## Commands
+## Installation
 
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
-
-The recommended workflow is to run TSDX in one terminal:
-
-```bash
-npm start # or yarn start
+Use npm to install this wrapper together with Handsontable.
+```
+npm install table-for-react
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Usage
 
-Then run either Storybook or the example playground:
-
-### Storybook
-
-Run inside another terminal:
-
-```bash
-yarn storybook
+```
+import {TheTable } from 'table-for-react'
 ```
 
-This loads the stories from `./stories`.
+The prop types are:
 
-> NOTE: Stories should reference the components as if using the library, similar to the example playground. This means importing from the root project directory. This has been aliased in the tsconfig and the storybook webpack config as a helper.
-
-### Example
-
-Then run the example inside another:
-
-```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
 ```
-
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
-
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle analysis
-
-Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-/stories
-  Thing.stories.tsx # EDIT THIS
-/.storybook
-  main.js
-  preview.js
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
-```
-
-#### React Testing Library
-
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [size-limit](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
+interface TheTableProps {
+rows:any[]
+error:{name:string,error:string}
+update:boolean
+header:{name:string,prop:string}[]
+validate: (prev: any, current: any) => boolean
+saveChanges: (prev: any, current: any) => void
+deleteRow: (current: any) => void
 }
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
+### **rows:**
+This prop takes an array of objects with each object being mapped to it's own row.
 
-## Module Formats
+in this example 
+``` [
+  {"id":6,"name":"Aleen","age":92,"email":"apedrollo5@telegraph.co.uk","date":"27/09/2020"},
+   {"id":7,"name":"Alison","age":22,"email":"apedo5@telegraph.co.re","date":"27/03/2020"}]
+```
+> The object requires an unique id key preferably the same one used in the database,
+> any date values should also have the date key , other fields are can be anyting else of  > type string or number
 
-CJS, ESModules, and UMD module formats are supported.
+### **error:**
+This props requires you to add a useState hook and pass in the error prop
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Deploying the Example Playground
-
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
-
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
+```
+const [error, setError] = useState({name:"",error:""});
 ```
 
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+### **update:**
+You can hard code this value or pass it in with a hook to enable toggling to display edit icons.
+```
+  const [update, setUpdate] = useState(true);
+```
+### **header:**
+This prop is an array of objects that  will determine how any header columns are displayed, make sure to match them to the row object keys. id and date are needed
+```
+  const header = [
+    {
+      name: "ID",
+      prop: "id",
+    },
+    {
+      name: "Name",
+      prop: "name",
+    },
+    {
+      name: "Age",
+      prop: "age",
+    },
+    {
+      name: "Email",
+      prop: "email",
+    },
+    {
+      name: "Date",
+      prop: "date",
+    }
+  ];
+  ```
+### **validate:** 
+This prop will be a function that will have access to the current row being edited and a copy before the edit began , handle validation here and return false and set an error if validation failed. this function is called after the ✔ icon after editing.
 
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
+the error should be mapped to the respective field for example a check to ensure positive values in age field sould set an error like 
+```
+setError({name:"age",error:"age:"can't be negative"})
+```
+make sure to match the name prop to a key in the row object
+```
+  const validate=(prev:any,current:any)=>{
+   
+  if(current===prev){
+    setError({name:"name",error:"nothing changed"})
+     return false
+   } 
+
+   setError({name:"",error:""})
+   return true
+  }
 ```
 
-## Named Exports
+### **saveChanges && deleteRow:**
+This prop is a function that willget called if the validation passes
+it has access to the prev and current , prev being a copy ofthe row object before the edit and current being the changed object which is what you might want to save as an update to the  database. delet row will delete the said row which why the unique id should be in the row object
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
-
-## Usage with Lerna
-
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
-
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
-
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
-
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
+```
+  const saveChanges=(prev:any,current:any)=>{
+  console.log("saving ...",current)
+  }
+  
+  const deleteRow=(current:any)=>{
+  console.log("delteing current ,",current)
+  }
 ```
 
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
+
+
+##  Support and contribution 
+Am just getting started and have no particular framework for contributio so opening an issue or a pull request will work for now @ [table-for-react](https://github.com/tigawanna/tigawanna/table-for-reac) 
+
+
+
+
+
+## License
+MIT licence 
+[licence](https://github.com/tigawanna/table-for-react/blob/master/LICENSE)
+
+Created and maintained by [Tigawanna](https://github.com/tigawanna/tigawanna) 
