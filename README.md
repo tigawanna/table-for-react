@@ -1,6 +1,6 @@
 # table-for-react 
 <div align="center">
-This is a basic react html table  table with added functionality fro doing database operations directly in the table[**table-for-react**](https://github.com/tigawanna/table-for-react) data <br>
+This is a basic react html table component with added functionality for doing database operations directly in the table[**table-for-react**](https://github.com/tigawanna/table-for-react) data <br>
 It provides basic displaying ,sorting and editing of json as table rows.<br>
 </div>
 
