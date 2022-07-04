@@ -1,0 +1,6 @@
+"use strict";
+if ("development" === 'production') {
+  module.exports = require('./table-for-react.cjs.production.min.js');
+} else {
+  module.exports = require('./table-for-react.cjs.development.js');
+}
