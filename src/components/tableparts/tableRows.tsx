@@ -19,7 +19,7 @@ import { Tyme } from './../TheTable/utils/types';
 export const mainRow = (
   index: number,
   item: any,
-  header: { name: string; prop: string ,type:string}[],
+  header: { name: string; prop: string ,type:string,editable:boolean}[],
   handleChange: any,
   editIdx: number,
   startEditing: (index: number, item: any) => void,
@@ -31,7 +31,8 @@ export const mainRow = (
   error: ErrorState | undefined
 ) => {
 
-//transform <td> data here before it's mapped to the table, remember no obects allowwed as react children
+//transform <td> data here before it's mapped to the table,
+// remember no obects allowwed as react children
 const mapToCurrent = (
   prop: string | number,
   type:string,
@@ -57,25 +58,24 @@ if(type === "id"){
 
 const currentlyEditing = editIdx === index;
   return (
-    <tr key={index} className="">
+    <tr 
+  key={index} className="">
     {/* table cell */}
     {header.map((head, index) => {
       addItemId(item,head.prop,head.type)
     
       return (
         <td
-        className="border-slate-800 border-2 text-center p-1 
-        overflow-hidden   max-h-1"
+        className="border-slate-800 border-2 text-center p-1 "
           key={
             //@ts-ignore
             head.prop + item[head.prop]
           }
         >
-          {currentlyEditing ? (
+          {currentlyEditing&&head.editable ? (
             <div>
               <input
-                className="w-full border-red-900 border-2 text-center
-                 p-[4px] sm:p-[2px]"
+                className="w-full border-red-900 border-2 text-center "
                 id={head.prop}
                 name={head.prop}
                 onChange={(e) => handleChange(e, head.prop, index)}
@@ -128,5 +128,4 @@ const currentlyEditing = editIdx === index;
 
    
 };
-
 

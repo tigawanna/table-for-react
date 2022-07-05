@@ -2,12 +2,12 @@
   
 
 export  const header=[
-  {name:"PayId",prop:"paymentId",type:"string"},    
-  {name:"Payment",prop:"payment",type:"string"},
-  {name:"Date",prop:"date",type:"date"},
-  {name:"MadeBy",prop:"madeBy",type:"string"},
-  {name:"Shop",prop:"shopno",type:"string"},
-  {name:"mode",prop:"paymentmode",type:"string"},
+  {name:"PayId",prop:"paymentId",type:"string",editable:true},    
+  {name:"Payment",prop:"payment",type:"string",editable:true},
+  {name:"Date",prop:"date",type:"date",editable:false},
+  {name:"MadeBy",prop:"madeBy",type:"string",editable:true},
+  {name:"Shop",prop:"shopno",type:"string",editable:true},
+  {name:"mode",prop:"paymentmode",type:"string",editable:true},
   ]
   
   
