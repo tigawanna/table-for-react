@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons/lib';
 import { mainRow } from './components/tableparts/tableRows';
 import { UndoModal } from './components/tableparts/UndoModal';
 
-interface TheTableProps {
+export interface TheTableProps {
 rows:any[]
 error:{name:string,error:string}
 update:boolean

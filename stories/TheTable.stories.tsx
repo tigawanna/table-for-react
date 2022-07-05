@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 import { Meta, Story } from '@storybook/react';
 import { TheTable,TheTableProps  } from '../src';
-import DATA from '../vars/MOCK_TABLE.json'
-import {header} from '../vars/vars'
+// import DATA from '../vars/MOCK_TABLE.json'
+import {header,sample_payment} from '../vars/vars'
 
 
 const meta: Meta = {
@@ -28,4 +28,4 @@ const Template: Story<TheTableProps> = args => <TheTable {...args} />;
 // https://storybook.js.org/docs/react/workflows/unit-testing
 export const Default = Template.bind({});
 
-Default.args = {rows:DATA,header,update:true};
+Default.args = {rows:sample_payment,header,update:true};

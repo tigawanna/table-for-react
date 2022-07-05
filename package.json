@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && yarn build-tailwind",
+    "build": "tsdx build && npm run build-tailwind",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "npm run build",
