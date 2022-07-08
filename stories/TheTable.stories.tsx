@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React  from 'react';
 import { Meta, Story } from '@storybook/react';
 import { TheTable,TheTableProps  } from '../src';
 // import DATA from '../vars/MOCK_TABLE.json'
@@ -50,4 +50,4 @@ const validate=(prev:any,current:any)=>{
   const clearError=()=>{
     // setError({name:"",error:""})
     }
-Default.args = {rows:sample_payment,header,update:true,clearError,deleteRow,saveChanges,validate};
+Default.args = {rows:sample_payment,header};

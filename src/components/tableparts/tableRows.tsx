@@ -1,5 +1,5 @@
 import React from 'react'
-
+import dayjs from 'dayjs';
 
 import {
   FaRegEdit,
@@ -39,11 +39,16 @@ const mapToCurrent = (
   item: any
 ): string | number => {
 
-//checking for firebase timestamp object to civert it to date
+//checking for firebase timestamp object to convert it to date string
 if(type==="date" && (item[prop] as Tyme).seconds){
  return tymeToDate(item[prop] as Tyme)
 }
 
+//checking for javascript date object to convert it to date string
+if(type==="date" && item[prop] instanceof Date){
+  return dayjs(item[prop]).format("DD/MM/YYYY")
+ }
+ 
 //@ts-ignore
 return item[prop];
 };

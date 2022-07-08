@@ -9,41 +9,46 @@ import { UndoModal } from './components/tableparts/UndoModal';
 import { tymeToDate } from './components/TheTable/utils/utils';
 import { Tyme } from './components/TheTable/utils/types';
 
+
 export interface TheTableProps {
   rows:any[]
-  error:{name:string,error:string}
-  update:boolean
   header:{name:string,prop:string,type:string,editable:boolean}[]
-  validate: (prev: any, current: any) => boolean
-  saveChanges: (prev: any, current: any) => void
-  deleteRow: (current: any) => void
-  clearError: () => void
+
+  //optional props use ?. for fuctions before invoking them 
+  update?:boolean
+  sort?:boolean
+  error?:{name:string,error:string}
+  validate?: (prev: any, current: any) => boolean
+  saveChanges?: (prev: any, current: any) => void
+  deleteRow?: (current: any) => void
+  clearError?: () => void
   }
+
   
   
   export const TheTable: React.FC<TheTableProps> = (
-    {
+  {
     rows,
     error,
-    update,
+    update=false,
+    sort=false,
     header,
     validate,
     saveChanges,
     deleteRow,
     clearError
   }
-    ) => {
-  
+   ) => {
   
   const [data, setData] = useState<any>(rows);
   const [editIdx, setEditIdx] = useState(-1);
   const [before, setBefore] = useState<any>({});
   const [input, setInput] = useState<any>();
   
+  
   const { countdown, start,reset} = useCountdownTimer({timer: 1000 * 5,resetOnExpire:true});
   
-  
-  const handleSortAsc = (field:any) => {
+   const handleSortAsc = (field:any) => {
     function compare(a:any, b:any) {
       if (typeof a === "number") {
         //@ts-ignore
@@ -119,8 +124,8 @@ export interface TheTableProps {
        setEditIdx(-1);
      } else {
        setEditIdx(-1);
-       deleteRow(input)
-       clearError()
+       deleteRow?.(input)
+       clearError?.()
        data?.splice(index, 1);
        start()
      }
@@ -133,10 +138,10 @@ export interface TheTableProps {
   
    //save the edits to db
    const stopEditing = async (index: number) => {
-      if(validate(before,input)){
+      if(validate?.(before,input)){
        data?.splice(index, 1,input);
       setEditIdx(-1);
-      saveChanges(before,input)
+      saveChanges?.(before,input)
      
      }
    }
@@ -146,10 +151,10 @@ export interface TheTableProps {
   
      if (index === -69) {
         setEditIdx(-1);
-        clearError()
+        clearError?.()
       } else {
         setEditIdx(-1);
-        clearError()
+        clearError?.()
       }
   
    };
@@ -171,10 +176,10 @@ export interface TheTableProps {
                     >
                   <div className="flex justify-center items-center w-full bg-slate-900 h-full">
                     <div className="flex font-semibold">{x.name}</div>
-                        <div className="flex flex-col ml-1 h-[60%] ">
+                       {sort?<div className="flex flex-col ml-1 h-[60%] ">
                           <FaSortUp onClick={() => handleSortAsc(x.prop)}/>
                           <FaSortDown onClick={() => handleSortDesc(x.prop)} />
-                        </div>
+                        </div>:null}
                     </div>
                 
                     </td>;

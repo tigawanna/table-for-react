@@ -29,17 +29,37 @@ The prop types are:
 
 ```
 interface TheTableProps {
-rows:any[]
-error:{name:string,error:string}
-update:boolean
-header:{name:string,prop:string}[]
-validate: (prev: any, current: any) => boolean
-saveChanges: (prev: any, current: any) => void
-deleteRow: (current: any) => void
-clearError: () => void
+  rows:any[]
+  header:{name:string,prop:string,type:string,editable:boolean}[]
+
+  //optional props use ?. for fuctions before invoking them 
+  update?:boolean
+  sort?:boolean
+  error?:{name:string,error:string}
+  validate?: (prev: any, current: any) => boolean
+  saveChanges?: (prev: any, current: any) => void
+  deleteRow?: (current: any) => void
+  clearError?: () => void
 }
 ```
 
+| prop | description | required   |
+|------|-------------|------------|
+| rows | array of row objects| yes |
+| header | array of row description| yes |
+| update | boolean:default false | no |
+| sort  | boolean ;default false | no |
+| error | onject with name and error strings| no |
+|valiadte | function that handles row input validation after edits | no|
+|saveChanges | function that will be called on submit if validation  passes , make database updates here| no |
+| deleteRow | function that will be called on trash icon click | no |
+| clearError | call this fuction to manually clear errors in edge cases | no |
+
+&nbsp;
+
+> Only **rows** and **header**  props are mandatory because the table could be simply used to display data with no row data updating required , for example when printing 
+
+&nbsp;
 ### **rows:**
 This prop takes an array of objects with each object being mapped to it's own row.
 
@@ -58,7 +78,8 @@ This prop is an array of objects that  will determine how the table columns are 
 - - Any item marked with id type will be mapped to the id prop for standardisation, if you pass in userId with the id prop you'll be able to access it as **item.id** in the item objects inside the save,update,delete and validate methods  
   
 - - Date being any elements with dates.
-  for now were only checking for firebase time-stamps which are objects and not acceptable as react children so we have to parse them to their string equivalent with dayjs
+  for now we're only checking for firebase time-stamps and the javascript date (new Date()) which are objects and not acceptable as react children so we have to parse them to their string equivalent with dayjs
+  
   
   &nbsp;
 - **editable** field determines if the item should be editable , for example dates should be system genrated and not user editable to enforce data integrity
@@ -76,29 +97,32 @@ export  const header=[
     
   ```
 
+
+
+
+### **update:**
+_optional default: false_ <br/>
+You can hard code this value or pass it in with a hook to enable toggling to display edit icons.
+
+
+```
+  const [update, setUpdate] = useState(true);
+```
+
+### **sort:**
+_optional default: false_ <br/>
+set to true to display the table sorting icons
+
 ### **error:**
 This props requires you to add a useState hook and pass in the error prop
 
 
 ```
 const [error, setError] = useState({name:"",error:""});
-```
-
-
-### **update:**
-You can hard code this value or pass it in with a hook to enable toggling to display edit icons.
-
-```
-  const [update, setUpdate] = useState(true);
-```
-
-
-
-
-### **validate:** 
 This prop will be a function that will have access to the current row being edited and a copy before the edit began , handle validation here and return false and set an error if validation failed. this function is called after the ✔ icon after editing.
-
 the error should be mapped to the respective field for example a check to ensure positive values in age field sould set an error like 
+```
+
 
 ```
 setError({name:"age",error:"age:"can't be negative"})
@@ -248,12 +272,15 @@ function App() {
     <div className="absolute h-[60%] w-full z-40 bg-white">
      <TheTable
      rows={small_data}
+     header={header}
+
+     //optional
      error={error}
      update={update}
+     sort={true}
      validate={validate}
      saveChanges={saveChanges}
      deleteRow={deleteRow}
-     header={header}
      clearError={clearError}
      />
      </div>
