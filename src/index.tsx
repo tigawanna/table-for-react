@@ -45,7 +45,9 @@ export interface TheTableProps {
   const [before, setBefore] = useState<any>({});
   const [input, setInput] = useState<any>();
   
-  useEffect(() => {}, [rows]) 
+  //refresh the data if another row is added/removed
+  useEffect(() => { setData(rows)}, [rows])
+
   const { countdown, start,reset} = useCountdownTimer({timer: 1000 * 5,resetOnExpire:true});
   
    const handleSortAsc = (field:any) => {
