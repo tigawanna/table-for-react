@@ -6,7 +6,7 @@ export  const header=[
   {name:"Payment",prop:"payment",type:"string",editable:true},
   {name:"Date",prop:"date",type:"date",editable:false},
   {name:"MadeBy",prop:"madeBy",type:"string",editable:true},
-  {name:"Shop",prop:"shopno",type:"string",editable:true},
+  {name:"Shop",prop:"shopnumber",type:"string",editable:true},
   {name:"mode",prop:"paymentmode",type:"string",editable:true},
   ]
   
@@ -24,7 +24,7 @@ export  const header=[
           "madeBy": "nimda",
           "payment": "20000",
           "floor": "ground",
-          "shopno": "G-01"
+          "shopnumber": "G-01"
       },
       {
           "date": {
@@ -37,20 +37,53 @@ export  const header=[
           "madeBy": "nimda",
           "payment": "10000",
           "floor": "ground",
-          "shopno": "G-01"
+          "shopnumber": "G-01"
       },
       {
-          "date": {
-              "seconds": 1628238749,
-              "nanoseconds": 273000000
-          },
-          "paymentmode": "cash",
+          "date":new Date(),
+          "paymentmode": "cashino",
           "month": "August",
           "paymentId": "G-01ks03b7miground",
           "madeBy": "nimda",
           "payment": "20000",
           "floor": "ground",
-          "shopno": "G-01"
-      }
+          "shopnumber": "G-01"
+      },
+      {
+        "date": "2022-07-09T08:55:47.156Z",
+        "shopnumber": "G-01",
+        "payment": 1000,
+        "paymentId": "G-01l5dnjaauground",
+        "madeBy": "Panda Mountain",
+        "month": "July",
+        "paymentmode": "cash"
+    },
+    {
+        "date": "2022-07-09T08:56:11.770Z",
+        "shopnumber": "G-01",
+        "payment": 1000,
+        "paymentId": "G-01l5dnjt12ground",
+        "madeBy": "Panda Mountain",
+        "month": "July",
+        "paymentmode": "cash"
+    },
+    {
+        "date": "2022-07-09T08:56:11.770Z",
+        "shopnumber": "G-01",
+        "payment": 1000,
+        "paymentId": "G-01l5dnjt12ground",
+        "madeBy": "Panda Mountain",
+        "month": "July",
+        "paymentmode": "cash"
+    },
+    {
+        "date": "2022-07-09T08:56:11.770Z",
+        "shopnumber": "G-01",
+        "payment": 1000,
+        "paymentId": "G-01l5dnjt12ground",
+        "madeBy": "Panda Mountain",
+        "month": "July",
+        "paymentmode": "cash"
+    }
   ]
   

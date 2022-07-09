@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
 
 import { useCountdownTimer } from 'use-countdown-timer';
@@ -45,7 +45,7 @@ export interface TheTableProps {
   const [before, setBefore] = useState<any>({});
   const [input, setInput] = useState<any>();
   
-  
+  useEffect(() => {}, [rows]) 
   const { countdown, start,reset} = useCountdownTimer({timer: 1000 * 5,resetOnExpire:true});
   
    const handleSortAsc = (field:any) => {
