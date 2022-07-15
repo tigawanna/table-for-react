@@ -4,6 +4,8 @@
 This is a basic react html table component with added functionality for doing database operations directly in the table 
 @[**table-for-react**](https://github.com/tigawanna/table-for-react) <br>
 It provides basic displaying ,sorting and editing of json as table rows.<br>
+[for example usage](https://github.com/tigawanna/table-for-react-example)<br/>
+[example usage live preview](https://tigawanna.github.io/table-for-react-example/)<br/>
 </div>
 
 
