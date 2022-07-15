@@ -14,22 +14,22 @@ It provides basic displaying ,sorting and editing of json as table rows.<br>
 
 ## Installation
 
-```
+```ts
 npm install table-for-react
 ```
 
 ## Usage
 
-```
+```ts
 import {TheTable } from 'table-for-react'
 ```
 and in your app.tsx/app.js 
-```
+```ts
 import '../node_modules/table-for-react/dist/tailwind.css'
 ```
 The prop types are:
 
-```
+```ts
 interface TheTableProps {
   rows:any[]
   header:{name:string,prop:string,type:string,editable:boolean}[]
@@ -66,7 +66,7 @@ interface TheTableProps {
 This prop takes an array of objects with each object being mapped to it's own row.
 
 in this example 
-``` [
+```ts [
   {"id":6,"name":"Aleen","age":92,"email":"apedrollo5@telegraph.co.uk","date":"27/09/2020"},
    {"id":7,"name":"Alison","age":22,"email":"apedo5@telegraph.co.re","date":"27/03/2020"}]
 ```
@@ -87,7 +87,7 @@ This prop is an array of objects that  will determine how the table columns are 
 - **editable** field determines if the item should be editable , for example dates should be system genrated and not user editable to enforce data integrity
 
  &nbsp;
-```
+```ts
 export  const header=[
     {name:"PayId",prop:"paymentId",type:"string",editable:true},    
     {name:"Payment",prop:"payment",type:"string",editable:true},
@@ -107,7 +107,7 @@ _optional default: false_ <br/>
 You can hard code this value or pass it in with a hook to enable toggling to display edit icons.
 
 
-```
+```ts
   const [update, setUpdate] = useState(true);
 ```
 
@@ -119,20 +119,20 @@ set to true to display the table sorting icons
 This props requires you to add a useState hook and pass in the error prop
 
 
-```
+```ts
 const [error, setError] = useState({name:"",error:""});
 This prop will be a function that will have access to the current row being edited and a copy before the edit began , handle validation here and return false and set an error if validation failed. this function is called after the ✔ icon after editing.
 the error should be mapped to the respective field for example a check to ensure positive values in age field sould set an error like 
 ```
 
 
-```
+```ts
 setError({name:"age",error:"age:"can't be negative"})
 ```
 
 
 make sure to match the name prop to a key in the row object
-```
+```ts
   const validate=(prev:any,current:any)=>{
    
   if(current===prev){
@@ -150,7 +150,7 @@ make sure to match the name prop to a key in the row object
 This prop is a function that willget called if the validation passes
 it has access to the prev and current , prev being a copy ofthe row object before the edit and current being the changed object which is what you might want to save as an update to the  database. delet row will delete the said row which why the unique id should be in the row object
 
-```
+```ts
   const saveChanges=(prev:any,current:any)=>{
   console.log("saving ...",current)
   }
@@ -162,7 +162,7 @@ it has access to the prev and current , prev being a copy ofthe row object befor
 
 ### **clearError**
 
-```
+```ts
   const clearError=()=>{
     setError({name:"",error:""})
     }
@@ -178,7 +178,7 @@ use this to clear any error that was unresloved when you cancel an update
 > Wrap the table component with  position absolute to make the header stick to the top
 
 &nbsp;
-```
+```ts
     <div className="w-full h-full overflow-y-hidden">
     {/* <div className="p-[10%] bg-red-400 h-[40%]">top</div> */}
     <div className="absolute h-[60%] w-full z-40 bg-white">
@@ -200,7 +200,7 @@ use this to clear any error that was unresloved when you cancel an update
 the parent app component should look like 
 
 
-```
+```ts
 import DATA from './MOCK_TABLE.json'
 import { useState } from 'react';
 // import { TheTable } from './components/TheTable/TheTable';
